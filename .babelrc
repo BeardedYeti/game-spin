@@ -1,0 +1,18 @@
+{
+	"plugins": [
+		"transform-class-properties",
+		"syntax-decorators",
+		"transform-decorators-legacy",
+		"react-hot-loader/babel"
+	],
+	'presets': [
+		'latest',
+		'react',
+		'stage-0'
+	],
+	"env": {
+		"presets": [
+			"react-hmre"
+		]
+	}
+}
