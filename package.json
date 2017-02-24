@@ -4,8 +4,9 @@
   "description": "React Redux Express MongoDB Application",
   "main": "index.js",
   "scripts": {
-    "start": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors",
+    "start-dev": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors && babel-node ./src/server.js",
     "build": "env NODE_ENV=production webpack --config ./webpack.config.babel.js --colors",
+    "start-prod": "build && babel-node ./src/server.js",
     "test": "jest"
   },
   "author": "Colin Smith",

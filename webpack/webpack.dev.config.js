@@ -37,7 +37,12 @@ const DEV_CONFIG = {
 			children: false
 		},
 		contentBase: DIST_PATH,
-		publicPath: '/'
+		publicPath: '/',
+		proxy: {
+	      '/api': {
+	        target: 'http://localhost:8081',
+	        secure: false
+	    }
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),

@@ -59,4 +59,4 @@ typings/
 .env
 
 # Compiled Direcotry
-dist/assets/
+dist/
