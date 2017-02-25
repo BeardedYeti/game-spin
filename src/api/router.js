@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import { index } from './controllers/movies';
+import { index } from '../controllers/movies';
 
 const router = Router();
 

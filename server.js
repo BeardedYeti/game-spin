@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import webpack from 'webpack';
 
-import router from './src/router';
+import router from './src/api/router';
 import webpackConfig from './webpack.config.babel.js';
 import { DIST_PATH } from './webpack/webpack.paths.config';
 
