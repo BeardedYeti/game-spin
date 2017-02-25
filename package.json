@@ -4,10 +4,11 @@
   "description": "React Redux Express MongoDB Application",
   "main": "index.js",
   "scripts": {
-    "start-dev": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors && babel-node ./src/server.js",
+    "start-dev": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors && babel-node server.js",
     "build": "env NODE_ENV=production webpack --config ./webpack.config.babel.js --colors",
-    "start-prod": "build && babel-node ./src/server.js",
-    "test": "jest"
+    "start-prod": "build && babel-node server.js",
+    "test": "jest",
+    "populate": "babel-node ./src/populate.js"
   },
   "author": "Colin Smith",
   "license": "MIT",
@@ -16,6 +17,8 @@
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "mongodb": "^2.2.24",
+    "mongoose": "^4.8.4",
+    "morgan": "^1.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",

@@ -1,9 +1,9 @@
-const express from 'express';
-const mongoose from 'mongoose';
-const morgan from 'morgan';
+import express from 'express';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
 
-const router from './src/router';
-const wbConfig from './webpack.config.babel.js';
+import router from './src/router';
+import wbConfig from './webpack.config.babel.js';
 
 mongoose.connect('mongodb://localhost:27017/movies');
 
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 
 	app.listen(8081, () => {
 		console.log("Magic has spawned the API for Development on Port 8081")
-	};
+	});
 } else {
 	const app = express();
 
