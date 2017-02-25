@@ -4,7 +4,8 @@
   "description": "React Redux Express MongoDB Application",
   "main": "index.js",
   "scripts": {
-    "start-dev": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors && babel-node server.js",
+    "start-dev": "env NODE_ENV=development babel-node server.js --colors",
+    "start-dev-test": "env NODE_ENV=development webpack-dev-server --config ./webpack.config.babel.js --progress --colors && babel-node server.js",
     "build": "env NODE_ENV=production webpack --config ./webpack.config.babel.js --colors",
     "start-prod": "build && babel-node server.js",
     "test": "jest",

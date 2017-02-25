@@ -2,7 +2,7 @@ import React from 'react';
 
 const App = () => (
 	<div>
-    	<h2>React Test Component</h2>
+    	<h2>React Test</h2>
  	</div>
 );
 

@@ -26,9 +26,10 @@ const config = {
 const COMMON_CONFIG = {
 	entry: {
 		app: [
-			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://localhost:8080',
-			'webpack/hot/only-dev-server',
+			//'react-hot-loader/patch',
+			//'webpack-dev-server/client?http://localhost:8080',
+			//'webpack/hot/only-dev-server',
+			'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
 			APP_PATH,
 		],
 		vendor: [
