@@ -3,6 +3,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import merge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 
 // Environment Configs
@@ -16,71 +17,59 @@ import {
 } from './webpack/webpack.paths.config.js';
 
 // Define ENV
-const ENV = process.env.NODE_ENV;
-const environments = ['development', 'production'];
-const config = {
-	development: DEV_CONFIG,
-	production: PROD_CONFIG
-}[ENV];
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProduction = nodeEnv === 'production';
+let config;
 
-const COMMON_CONFIG = {
-	entry: {
-		app: [
-			//'react-hot-loader/patch',
-			//'webpack-dev-server/client?http://localhost:8080',
-			//'webpack/hot/only-dev-server',
-			'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-			APP_PATH,
-		],
-		vendor: [
-			'react',
-	    	'react-dom',
-	    	'react-addons-shallow-compare',
-	    	'redux',
-	    	'react-redux',
-	    	'react-router'
-		]
-	},
-	output: {
-		path: DIST_PATH,
-		filename: '[name].bundle.js',
-		publicPath: '/'
-	},
+isProduction ? config = PROD_CONFIG : config = DEV_CONFIG
+
+const COMMON_CONFIG = {		
+// Common Plugins
+	plugins: [
+	  	new webpack.optimize.CommonsChunkPlugin({
+	  		name: 'vendor',
+	  		minChunks: Infinity,
+	  		filename: 'vendor-[hash].js',
+	  	}),
+	  	new webpack.DefinePlugin({
+	  		'process.env.NODE_ENV': JSON.stringify(nodeEnv)
+	  	}),
+	  	new webpack.NamedModulesPlugin(),
+	  	new HtmlWebpackPlugin({
+		    template: path.join(__dirname, 'index.html'),
+		    path: DIST_PATH,
+		    filename: 'index.html',
+		}),
+	  	new webpack.LoaderOptionsPlugin({
+	  		options: {
+	  			eslint: {
+	  				emitWarning: true
+	  			},
+	  			postcss: [
+	  				autoprefixer({
+				      browsers: ['last 3 versions', '> 1%', 'not ie < 8']
+				    })
+	  			]
+	  		}
+	  	})
+	],	
+// Common Rules and Loaders
 	module: {
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
+				exclude: /(node_modules)/,
 	  			include: APP_PATH,
 	  			use: [
 	  				'babel-loader',
 	  				'eslint-loader'
 	  			]
-			},
-			{
-				test: /\.(scss|sass)$/,
-	  			include: APP_PATH,
-	  			use: [
-	  				'style-loader',
-	  				{
-	  					loader: 'css-loader',
-	  					options: {
-	  						modules: true,
-	  						importLoaders: 2,
-	  						camelCase: true,
-	  						localIdentName: '[folder]_[local]_[hash:base64:5]'
-	  					}
-	  				},
-	  				'postcss-loader',
-	  				{
-	  					loader: 'sass-loader',
-	  					options: {
-	  						outputStyle: 'expanded',
-	  						includePaths: ASSETS_PATH
-	  					}
-	  				}
-	  			]
-	  		},
-
+			}//,
+			// {
+			//     test: /\.(png|gif|jpg|svg)$/,
+			//     include: IMG_PATH,
+			//     use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
+			// },
 		]
 	},
 	resolve: {
@@ -96,28 +85,7 @@ const COMMON_CONFIG = {
 	  		api: path.resolve(APP_PATH, 'api')
 	  	}
 	},
-	plugins: [
-	  	new webpack.optimize.CommonsChunkPlugin({
-	  		name: 'vendor',
-	  		minChunks: Infinity
-	  	}),
-	  	new webpack.DefinePlugin({
-	  		'process.env.NODE_ENV': JSON.stringify(ENV)
-	  	}),
-	  	new webpack.NamedModulesPlugin(),
-	  	new webpack.LoaderOptionsPlugin({
-	  		options: {
-	  			eslint: {
-	  				emitWarning: true
-	  			},
-	  			postcss: [
-	  				autoprefixer({
-				      browsers: ['last 3 versions', '> 1%', 'not ie < 8']
-				    })
-	  			]
-	  		}
-	  	})
-	]
+	
 };
 
 export default merge(config, COMMON_CONFIG);
