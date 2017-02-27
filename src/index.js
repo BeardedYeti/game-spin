@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { apiMiddleware, reducer } from './reducers/reducer';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './components/App';
 
+// Create Redux Store
+const store = createStore(reducer, {}, applyMiddleware(apiMiddleware));
+
+// Fetch Data
+store.dispatch({type: 'GET_MOVIE_DATA'});
+
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component/>
+      <Provider store={store}>
+        <Component/>
+      </Provider>
     </AppContainer>,
     document.getElementById('root')
   );
